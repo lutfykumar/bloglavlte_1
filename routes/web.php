@@ -12,7 +12,10 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
+});
+Route::get('/blog', function () {
+    return view('blog-home');
 });
 
 Route::group(['middleware' => 'auth'], function () {
