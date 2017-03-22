@@ -16,10 +16,15 @@ class CreateCommentsTable extends Migration
         Schema::create('comments', function (Blueprint $table){
             // our schema is defined in here
             $table->increments('id');
-            $table->integer('post_id');
+            $table->integer('on_post') -> unsigned() ->default(0);
+            $table->foreign('on_post')
+                    ->references('id')->on('posts')
+                    ->onDelete('cascade');
+            $table->integer('from_user') -> unsigned() ->default(0);
+            $table->foreign('from_user')
+                    ->references('id')->on('users')
+                    ->onDelete('cascade');
             $table->text('body');
-            $table->string('author');
-            $table->timestamps();
         });
     }
 
@@ -30,6 +35,8 @@ class CreateCommentsTable extends Migration
      */
     public function down()
     {
-        //
+        //delete comments table
+        schema::drop('comments');
+
     }
 }

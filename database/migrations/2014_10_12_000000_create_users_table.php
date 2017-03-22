@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            // add new field in users table
+            $table->enum('role',['admin','author','subcriber'])->default('author');
             $table->rememberToken();
             $table->timestamps();
         });

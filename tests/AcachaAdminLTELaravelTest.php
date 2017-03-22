@@ -97,7 +97,7 @@ class AcachaAdminLTELaravelTest extends TestCase
             ->type($user->email, 'email')
             ->type('passw0RD', 'password')
             ->press('Sign In')
-            ->seePageIs('/home')
+            ->seePageIs('/blog')
             ->see($user->name);
     }
 
@@ -139,18 +139,18 @@ class AcachaAdminLTELaravelTest extends TestCase
     }
 
     /**
-     * Test home page is only for authorized Users.
+     * Test blog page is only for authorized Users.
      *
      * @return void
      */
     public function testHomePageForUnauthenticatedUsers()
     {
-        $this->visit('/home')
+        $this->visit('/blog')
             ->seePageIs('/login');
     }
 
     /**
-     * Test home page works with Authenticated Users.
+     * Test blog page works with Authenticated Users.
      *
      * @return void
      */
@@ -159,7 +159,7 @@ class AcachaAdminLTELaravelTest extends TestCase
         $user = factory(App\User::class)->create();
 
         $this->actingAs($user)
-            ->visit('/home')
+            ->visit('/blog')
             ->see($user->name);
     }
 
@@ -172,10 +172,10 @@ class AcachaAdminLTELaravelTest extends TestCase
     {
         $user = factory(App\User::class)->create();
 
-        $form = $this->actingAs($user)->visit('/home')->getForm('logout');
+        $form = $this->actingAs($user)->visit('/blog')->getForm('logout');
 
         $this->actingAs($user)
-            ->visit('/home')
+            ->visit('/blog')
             ->makeRequestUsingForm($form)
             ->seePageIs('/');
     }
@@ -206,7 +206,7 @@ class AcachaAdminLTELaravelTest extends TestCase
             ->type('passw0RD', 'password')
             ->type('passw0RD', 'password_confirmation')
             ->press('Register')
-            ->seePageIs('/home')
+            ->seePageIs('/blog')
             ->seeInDatabase('users', ['email' => 'sergiturbadenas@gmail.com',
                                       'name'  => 'Sergi Tur Badenas', ]);
     }
